@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class AuthService{
+  Future<String> getUID();
   Future<FirebaseUser> googleSignIn();
   void signOut();
-  Future<FirebaseUser> getUserInfo();
 }
 
 class authService implements AuthService{
@@ -12,9 +12,9 @@ class authService implements AuthService{
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future<FirebaseUser> getUserInfo() async{
+  Future<String> getUID() async{
     final FirebaseUser user = await _auth.currentUser();
-    return user != null ? user : null;
+    return user != null ? user.uid : null;
   }
 
   @override
